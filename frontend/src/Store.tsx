@@ -22,7 +22,7 @@ const initialState: AppState = {
     }
 }
 
-type Action = { type:'SWITHC_MODE' } | { type: 'CART_ADD_ITEM'; payload: CartItem } | { type: 'CART_REMOVE_ITEM'; payload: CartItem } | { type: 'USER_SIGNIN'; payload: UserInfo }
+type Action = { type:'SWITHC_MODE' } | { type: 'CART_ADD_ITEM'; payload: CartItem } | { type: 'CART_REMOVE_ITEM'; payload: CartItem } | { type: 'USER_SIGNIN'; payload: UserInfo } | { type: 'USER_SIGNOUT' }
 
 function reducer(state: AppState, action: Action): AppState {
     switch (action.type) {
@@ -41,6 +41,26 @@ function reducer(state: AppState, action: Action): AppState {
             return {...state, cart: {...state.cart, cartItems } }}
         case 'USER_SIGNIN':
             return {...state, userInfo: action.payload }
+        case 'USER_SIGNOUT':
+            return {
+                mode: window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light',
+                ...state,
+                cart: {
+                    cartItems: [],
+                    paymentMethod: 'PayPal',
+                    shippingAddress: {
+                        fullName: '',
+                        address: '',
+                        city: '',
+                        country: '',
+                        postalCode: ''
+                    },
+                    itemsPrice: 0,
+                    shippingPrice: 0,
+                    taxPrice: 0,
+                    totalPrice: 0
+                },
+            }
         default: 
             return state
     }

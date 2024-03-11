@@ -1,4 +1,4 @@
-import { Badge, Button, Container, Nav, Navbar } from 'react-bootstrap'
+import { Badge, Button, Container, Nav, NavDropdown, Navbar } from 'react-bootstrap'
 import { Outlet } from 'react-router'
 import { Store } from './Store'
 import { useContext, useEffect } from 'react'
@@ -9,7 +9,7 @@ import "react-toastify/dist/ReactToastify.css"
 
 
 function App() {
-  const { state: { mode, cart }, dispatch } = useContext(Store)
+  const { state: { mode, cart, userInfo }, dispatch } = useContext(Store)
 
   useEffect(() => {
     document.body.setAttribute('data-bs-theme', mode)
@@ -17,6 +17,15 @@ function App() {
 
   const switchModeHandler = () => {
     dispatch({ type: 'SWITHC_MODE' })
+  }
+
+  const handleSingOut = () => {
+    dispatch({ type: 'USER_SIGNOUT' })
+    localStorage.removeItem('userInfo')
+    localStorage.clearItem('cartItems')
+    localStorage.removeItem('shippingAddress')
+    localStorage.removeItem('paymentMethod')
+    window.location.href = '/signin'
   }
  
   return (
@@ -42,7 +51,14 @@ function App() {
                 </Badge>
               )}
             </Link>
-            <a href='/signin' className={`${ mode === 'light' ? 'link-light' : 'link-dark' } nav-link`}>Sign In</a>
+            {/* <a href='/signin' className={`${ mode === 'light' ? 'link-light' : 'link-dark' } nav-link`}>Sign In</a> */}
+            {userInfo ? (
+              <NavDropdown title={userInfo.name} id='basic-nav-dropdown' className={`text-${mode === 'light' ? 'text-dark' : 'text-white'}`}>
+                <Link className='dropdown-item' to={'#singout'} onClick={handleSingOut}>Sing Out</Link>
+              </NavDropdown>
+            ) : (
+              <Link to='/signin' className={`${ mode === 'light'? 'link-light' : 'link-dark' } nav-link`}>Sign In</Link>
+            )}
           </Nav>
         </Navbar>
       </header>
