@@ -6,6 +6,12 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 .product-image {
   max-width: 400px;
   width: 100%;
@@ -25,4 +31,14 @@ img.thumbnail{
 
 .small-container {
   max-width: 600px;
+}
+
+.checkout-steps > div {
+  border-bottom: 0.2rem solid #a0a0a0;
+  color: #a0a0a0a0;
+}
+
+.checkout-steps > div.active {
+  border-bottom: 0.2rem solid #f08000;
+  color: #f08000;
 }

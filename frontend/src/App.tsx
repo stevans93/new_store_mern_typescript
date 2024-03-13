@@ -22,7 +22,7 @@ function App() {
   const handleSingOut = () => {
     dispatch({ type: 'USER_SIGNOUT' })
     localStorage.removeItem('userInfo')
-    localStorage.clearItem('cartItems')
+    localStorage.removeItem('cartItems')
     localStorage.removeItem('shippingAddress')
     localStorage.removeItem('paymentMethod')
     window.location.href = '/signin'
@@ -32,18 +32,23 @@ function App() {
     <div className='d-flex flex-column h-full vh-100'>
       <ToastContainer position='bottom-center' limit={1} />
       <header>
-        <Navbar bg={ mode === 'light' ? 'dark' : 'light' } variant={ mode === 'light' ? 'dark' : 'light' } expand='lg'>
+        <Navbar bg={ mode === 'light' ? 'dark' : 'secondary' } variant={ mode === 'light' ? 'dark' : 'light' } expand='lg'>
           <Container>
             <LinkContainer to={'/'}>
-              <Navbar.Brand className={`${ mode === 'light' ? 'link-light' : 'link-dark' } nav-link`}>Online Store</Navbar.Brand>
+              <Navbar.Brand>Online Store</Navbar.Brand>
             </LinkContainer>
             
           </Container>
           <Nav>
-            <Button variant={mode} onClick={switchModeHandler}>
-                <i className={ mode === 'light' ? 'fa fa-sun' : 'fa fa-moon' }></i>
-            </Button>
-            <Link to='/cart' className={`${ mode === 'light' ? 'link-light' : 'link-dark' } nav-link`}>
+            {userInfo ? (
+              <NavDropdown title={`Hello, ${userInfo.name}`} id='basic-nav-dropdown' className={`header-link`}>
+                <Link className='dropdown-item' to={'#singout'} onClick={handleSingOut}>Sing Out</Link>
+              </NavDropdown>
+            ) : (
+              <Link to='/signin'>Sign In</Link>
+            )}
+            
+            <Link to='/cart' className={` nav-link`}>
               Cart {' '}
               {cart.cartItems.length > 0 && (
                 <Badge pill bg='danger'>
@@ -51,14 +56,10 @@ function App() {
                 </Badge>
               )}
             </Link>
-            {/* <a href='/signin' className={`${ mode === 'light' ? 'link-light' : 'link-dark' } nav-link`}>Sign In</a> */}
-            {userInfo ? (
-              <NavDropdown title={userInfo.name} id='basic-nav-dropdown' className={`text-${mode === 'light' ? 'text-dark' : 'text-white'}`}>
-                <Link className='dropdown-item' to={'#singout'} onClick={handleSingOut}>Sing Out</Link>
-              </NavDropdown>
-            ) : (
-              <Link to='/signin' className={`${ mode === 'light'? 'link-light' : 'link-dark' } nav-link`}>Sign In</Link>
-            )}
+
+            <Button variant={mode} onClick={switchModeHandler}>
+                <i className={ mode === 'light' ? 'fa fa-sun' : 'fa fa-moon' }></i>
+            </Button>
           </Nav>
         </Navbar>
       </header>
