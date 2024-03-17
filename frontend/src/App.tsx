@@ -45,7 +45,7 @@ function App() {
                 <Link className='dropdown-item' to={'#singout'} onClick={handleSingOut}>Sing Out</Link>
               </NavDropdown>
             ) : (
-              <Link to='/signin'>Sign In</Link>
+              <Link className={` nav-link`} to='/signin'>Sign In</Link>
             )}
             
             <Link to='/cart' className={` nav-link`}>

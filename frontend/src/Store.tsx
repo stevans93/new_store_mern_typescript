@@ -22,7 +22,7 @@ const initialState: AppState = {
     }
 }
 
-type Action = { type:'SWITHC_MODE' } | { type: 'CART_ADD_ITEM'; payload: CartItem } | { type: 'CART_REMOVE_ITEM'; payload: CartItem } | { type: 'USER_SIGNIN'; payload: UserInfo } | { type: 'USER_SIGNOUT' } | { type: 'SAVE_SHIPPING_ADDRESS'; payload: ShippingAddress} | { type: 'SAVE_PAYMENT_METHOD'; payload: string }
+type Action = { type:'SWITHC_MODE' } | { type: 'CART_ADD_ITEM'; payload: CartItem } | { type: 'CART_REMOVE_ITEM'; payload: CartItem } | { type: 'CART_CLEAR'; } | { type: 'USER_SIGNIN'; payload: UserInfo } | { type: 'USER_SIGNOUT' } | { type: 'SAVE_SHIPPING_ADDRESS'; payload: ShippingAddress} | { type: 'SAVE_PAYMENT_METHOD'; payload: string }
 
 function reducer(state: AppState, action: Action): AppState {
     switch (action.type) {
@@ -78,6 +78,8 @@ function reducer(state: AppState, action: Action): AppState {
                     paymentMethod: action.payload,
                 },
             }
+        case 'CART_CLEAR':
+            return { ...state, cart: { ...state.cart, cartItems: [] } }
         default: 
             return state
     }

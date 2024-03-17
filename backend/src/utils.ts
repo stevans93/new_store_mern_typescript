@@ -11,7 +11,7 @@ export const generateToken = (user: User) => {
     },
     process.env.JWT_SECRET || 'secret',
     {
-        expiresIn: '1d',
+        expiresIn: '1h',
     })
 }
 
