@@ -11,7 +11,7 @@ export const generateToken = (user: User) => {
     },
     process.env.JWT_SECRET || 'secret',
     {
-        expiresIn: '1h',
+        expiresIn: '1m',
     })
 }
 
@@ -21,7 +21,11 @@ export const isAuth = (req: Request, res: Response, next: NextFunction) => {
     if(authorization) {
         const token = authorization.slice(7, authorization.length)
 
-        const decode = jwt.verify(token, process.env.JWT_SECRET || 'somethingsecret')
+        if (!token) {
+            return res.status(401).json({ message: 'No token provided' });
+        }
+
+        const decode = jwt.verify(token, process.env.JWT_SECRET || 'secret')
 
         req.user = decode as {
             _id: string;

@@ -6,6 +6,7 @@ import { productRouter } from './routers/product'
 import { seedRouter } from './routers/seedRouter'
 import { userRouter } from './routers/user'
 import { orderRouter } from './routers/order'
+import { keyRouter } from './routers/key'
 
 dotenv.config()
 
@@ -35,6 +36,7 @@ app.use('/api/products', productRouter)
 app.use('/api/seed', seedRouter)
 app.use('/api/users', userRouter)
 app.use('/api/orders', orderRouter)
+app.use('/api/keys', keyRouter)
 
 const PORT = 4000
 

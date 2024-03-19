@@ -31,21 +31,20 @@ export default function PlaceOrderPage() {
     const handlePlaceOrder = async () => {
         try {
             const data = await createOrder({
-                orderItems: cart.cartItems,
-                shippingAddress: cart.shippingAddress,
-                paymentMethod: cart.paymentMethod,
-                itemsPrice: cart.itemsPrice,
-                shippingPrice: cart.shippingPrice,
-                taxPrice: cart.taxPrice,
-                totalPrice: cart.totalPrice,
+              orderItems: cart.cartItems,
+              shippingAddress: cart.shippingAddress,
+              paymentMethod: cart.paymentMethod,
+              itemsPrice: cart.itemsPrice,
+              shippingPrice: cart.shippingPrice,
+              taxPrice: cart.taxPrice,
+              totalPrice: cart.totalPrice,
             })
-
             dispatch({ type: 'CART_CLEAR' })
             localStorage.removeItem('cartItems')
             navigate(`/order/${data.order._id}`)
-        } catch (error) {
-            toast.error(getError(error as ApiError))
-        }
+          } catch (err) {
+            toast.error(getError(err as ApiError))
+          }
     }
 
     useEffect(() => {

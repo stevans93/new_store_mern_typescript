@@ -5,10 +5,9 @@ import { generateToken } from '../utils'
 import { User, UserModel } from '../models/user'
 
 export const userRouter = express.Router()
-userRouter.post(
-  '/signin',
-  asyncHandler(async (req: Request, res: Response) => {
+userRouter.post('/signin', asyncHandler(async (req: Request, res: Response) => {
     const user = await UserModel.findOne({ email: req.body.email })
+
     if (user) {
       if (bcrypt.compareSync(req.body.password, user.password)) {
         res.json({
@@ -21,6 +20,7 @@ userRouter.post(
         return
       }
     }
+
     res.status(401).json({ message: 'Invalid email or password!' })
   })
 )
@@ -31,6 +31,7 @@ userRouter.post('signup', asyncHandler(async (req: Request, res: Response) => {
     email: req.body.email,
     password: bcrypt.hashSync(req.body.password)
   } as User)
+  
   res.json({
     _id: user._id,
     name: user.name,

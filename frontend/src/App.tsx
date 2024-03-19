@@ -40,14 +40,10 @@ function App() {
             
           </Container>
           <Nav>
-            {userInfo ? (
-              <NavDropdown title={`Hello, ${userInfo.name}`} id='basic-nav-dropdown' className={`header-link`}>
-                <Link className='dropdown-item' to={'#singout'} onClick={handleSingOut}>Sing Out</Link>
-              </NavDropdown>
-            ) : (
-              <Link className={` nav-link`} to='/signin'>Sign In</Link>
-            )}
-            
+            <Button variant={mode} onClick={switchModeHandler}>
+              <i className={ mode === 'light' ? 'fa fa-sun' : 'fa fa-moon' }></i>
+            </Button>
+
             <Link to='/cart' className={` nav-link`}>
               Cart {' '}
               {cart.cartItems.length > 0 && (
@@ -57,9 +53,16 @@ function App() {
               )}
             </Link>
 
-            <Button variant={mode} onClick={switchModeHandler}>
-                <i className={ mode === 'light' ? 'fa fa-sun' : 'fa fa-moon' }></i>
-            </Button>
+            {userInfo ? (
+              <NavDropdown title={`Hello, ${userInfo.name}`} id="basic-nav-dropdown" className="dropdown-menu-start">
+                <LinkContainer to="/orderhistory">
+                  <NavDropdown.Item>Order History</NavDropdown.Item>
+                </LinkContainer>
+                <Link className='dropdown-item' to={'#singout'} onClick={handleSingOut}>Sing Out</Link>
+              </NavDropdown>
+            ) : (
+              <Link className={` nav-link`} to='/signin'>Sign In</Link>
+            )}
           </Nav>
         </Navbar>
       </header>

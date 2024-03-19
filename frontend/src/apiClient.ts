@@ -17,4 +17,14 @@ apiClient.interceptors.request.use(async(config) => {
     Promise.reject(error)
 })
 
+apiClient.interceptors.request.use( (response) => { return response}, async (error) => {
+    const originalRequest = error.comfig
+
+    if(error.response.status === 500 && !originalRequest._retry) {
+        localStorage.removeItem('userInfo')
+    }
+
+    return Promise.reject(error)
+})
+
 export default apiClient
